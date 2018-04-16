@@ -11,6 +11,7 @@ router.get('/', cargo_controller.cargo_list);
 // POST request for cargo Post
 router.post('/create', cargo_controller.cargo_create_post);
 
+router.post('/import-quotes', cargo_controller.import_cargo_quotes);
 router.post('/update', cargo_controller.cargo_update_post);
 
 // POST request to delete cargo Post.

@@ -32,6 +32,8 @@ exports.cargo_detail = function(req, res) {
     INFO  : Handle create new cargo on POST.
 */
 exports.cargo_create_post = function(req, res) {
+    console.log(req.body.date1);
+    console.log(req.body.date2);
     req.checkBody('cargo_status', 'Cargo Status is required').notEmpty();
     req.checkBody('charterer',  'Charterer is required').notEmpty();
     req.checkBody('broker',  'Broker is required').notEmpty();
@@ -121,6 +123,56 @@ exports.cargo_update_post = function(req, res) {
             });
         }  
     });
+};
+
+//Handle import quotes from CSV
+
+
+
+exports.import_cargo_quotes = (req, res) => {
+   let importedQuotes = req.body.imported_quotes;
+   const importedBy = req.body.imported_by;
+   let quotes = [];
+   if (importedQuotes.length > 0 ) {
+        for (let i = 0; i < importedQuotes.length; i++) {
+            quotes.push({
+            cargo_status: importedQuotes[i][0],
+            charterer:  importedQuotes[i][1],
+            broker:  importedQuotes[i][2],
+            grade:     importedQuotes[i][3],
+            quantity:  importedQuotes[i][4],
+            date1:  importedQuotes[i][5],
+            date2:  importedQuotes[i][6],
+            load:  importedQuotes[i][7],
+            discharge:  importedQuotes[i][8],
+            rate_type:  importedQuotes[i][9],
+            rate:  importedQuotes[i][10],
+            vessel:  importedQuotes[i][11],
+            remarks:  importedQuotes[i][12],
+            added_by: importedBy
+            });
+        }
+        console.log(quotes);
+        CargoQuote.insertMany(quotes ,function(err) {
+            if(err && err.errors){
+                res.json({
+                     success: false,
+                     message: 'Something went wrong to import quotes!!',
+                     errors:err.errors
+                  });
+            } else {
+               res.json({
+                  message: 'Cargo quotes have been imported successfully!!',
+                  success: true
+              });
+            }
+         });
+    } else {
+        res.json({
+            success: false,
+            message: 'No Quotes Found To Be Imported!!'
+        });
+    }
 };
 
 
