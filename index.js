@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 const expressValidator = require('express-validator');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -16,6 +18,19 @@ const vesselRegister = require('./routes/vessel_register');  //Import routes for
 const inquiryContent = require('./routes/inquiry_content');  //Import routes for "inquiry_content" area of site
 const inquiryQuote = require('./routes/inquiry_quote');  //Import routes for "inquiry_quote" area of site
 const user = require('./routes/user');
+// socket io
+server.listen(443);
+io.on('connection', function (socket) {
+  console.log('User connected');
+  socket.on('disconnect', function() {
+    console.log('User disconnected');
+  });
+  socket.on('save-message', function (data) {
+    console.log(data);
+    io.emit('new-message', { message: data });
+  });
+});
+
 // ES6 promises
 mongoose.Promise = Promise;
 
@@ -58,6 +73,6 @@ app.use('/vessel-register', vesselRegister);
 app.use('/content', inquiryContent);
 app.use('/inquiry-quote', inquiryQuote);
 app.use('/user', user);
-app.listen(443, ()=>{
-  console.log('listening on the port 443');
-});
+//app.listen(443, ()=>{
+  //console.log('listening on the port 443');
+//});

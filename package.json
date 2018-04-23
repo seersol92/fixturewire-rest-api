@@ -4,7 +4,8 @@
   "description": "MEAN STACK WITH ANGULAR 4\t",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "dev": "nodemon ./server.js",
+    "start": "node ./server.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,9 @@
   "dependencies": {
     "@angular/cli": "^1.7.2",
     "bcrypt-nodejs": "0.0.3",
+    "bcryptjs": "2.4",
     "bluebird": "^3.5.1",
+    "body-parser": "1.17",
     "cors": "^2.8.4",
     "crypto": "^1.0.1",
     "email-templates": "^2.7.1",
@@ -36,8 +39,12 @@
     "jsonwebtoken": "^8.2.1",
     "mongoose": "^4.13.12",
     "mongoose-unique-validator": "^1.0.6",
+    "morgan": "1.8",
     "nodemailer": "^4.6.4",
     "nodemon": "^1.17.3",
-    "pm2": "^2.10.1"
+    "passport": "^0.4.0",
+    "passport-jwt": "2.2",
+    "pm2": "^2.10.1",
+    "socket.io": "^1.7.4"
   }
 }

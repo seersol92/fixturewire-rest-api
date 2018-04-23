@@ -1,6 +1,7 @@
 const CargoQuote = require('../models/cargo_quote'); //import CargoQuote  model schema
 var ObjectID = require('mongodb').ObjectID; 
 
+
 exports.index = function(req, res) {
     res.send('NOT IMPLEMENTED: Site Home Page');
 };
