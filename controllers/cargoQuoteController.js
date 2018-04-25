@@ -1,4 +1,5 @@
 const CargoQuote = require('../models/cargo_quote'); //import CargoQuote  model schema
+const importCargoQuote = require('../models/import_cargo_quote');
 var ObjectID = require('mongodb').ObjectID; 
 
 
@@ -94,20 +95,20 @@ exports.cargo_create_post = function(req, res) {
 exports.cargo_update_post = function(req, res) {
     var query = { '_id' : ObjectID(req.body.cargo_id)};
     let cargo = {
-           cargo_status: req.body.cargo_status.toLowerCase(),
-           charterer:  req.body.charterer.toLowerCase(),
-           broker:  req.body.broker.toLowerCase(),
-           grade:     req.body.grade.toLowerCase(),
-           quantity:  req.body.quantity.toLowerCase(),
-           date1:  new Date(req.body.date1).toDateString(),
-           date2:  new Date(req.body.date2).toDateString(),
-           load:  req.body.load.toLowerCase(),
-           discharge:  req.body.discharge.toLowerCase(),
-           rate_type:  req.body.rate_type.toLowerCase(),
-           rate:  req.body.rate.toLowerCase(),
-           vessel:  req.body.vessel.toLowerCase(),
-           remarks:  req.body.remarks.toLowerCase(),
-           added_by: req.body.addedby.toLowerCase()
+           cargo_status: req.body.cargo_status,
+           charterer:  req.body.charterer,
+           broker:  req.body.broker,
+           grade:     req.body.grade,
+           quantity:  req.body.quantity,
+           date1:  new Date(req.body.date1),
+           date2:  new Date(req.body.date2),
+           load:  req.body.load,
+           discharge:  req.body.discharge,
+           rate_type:  req.body.rate_type,
+           rate:  req.body.rate,
+           vessel:  req.body.vessel,
+           remarks:  req.body.remarks,
+           added_by: req.body.addedby
         };
           
     CargoQuote.findOneAndUpdate(query, cargo, function(err, cargo_list) {
@@ -153,8 +154,7 @@ exports.import_cargo_quotes = (req, res) => {
             added_by: importedBy
             });
         }
-        console.log(quotes);
-        CargoQuote.insertMany(quotes ,function(err) {
+        importCargoQuote.insertMany(quotes ,function(err) {
             if(err && err.errors){
                 res.json({
                      success: false,

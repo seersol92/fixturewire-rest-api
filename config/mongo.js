@@ -12,21 +12,24 @@ const init = () => {
     const db = mongoose.connection;
     // mongodb error
     db.on('error',  err => log.err('mongo', 'error', err.message || err));
-    // mongodb connection open
-    db.once('open', () => 
-      log.log('mongo', `connected to db: "${config.mongo.host}"`)
-    );
   };
 
 // connect to mongo host, set retry on initial fail
 const connectMongo = () => {
-  mongoose.connect(config.mongo.host, {
+  var options = {
     useMongoClient: true,
-    promiseLibrary: global.Promise
-  }).catch(err => {
-    log.err('mongo', 'connection to db failed', err.message || err);
-    setTimeout(connectMongo, 2000);
-  });
+    autoIndex: false, // Don't build indexes
+    reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+    reconnectInterval: 500, // Reconnect every 500ms
+    poolSize: 10, // Maintain up to 10 socket connections
+    // If not connected, return errors immediately rather than waiting for reconnect
+    bufferMaxEntries: 0
+  };
+
+  mongoose.connect(config.mongo.host, options).then(
+    () => log.log('mongo', `connected to db: "${config.mongo.host}"`),
+    err => log.err('mongo', 'error', err.message || err)
+  );
 }
 
 

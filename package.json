@@ -2,7 +2,7 @@
   "name": "mean_app2",
   "version": "1.0.0",
   "description": "MEAN STACK WITH ANGULAR 4\t",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "dev": "nodemon ./server.js",
     "start": "node ./server.js"
