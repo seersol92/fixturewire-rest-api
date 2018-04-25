@@ -1,5 +1,6 @@
 const CargoQuote = require('../models/cargo_quote'); //import CargoQuote  model schema
 const importCargoQuote = require('../models/import_cargo_quote');
+const moment = require('moment');
 var ObjectID = require('mongodb').ObjectID; 
 
 
@@ -129,7 +130,13 @@ exports.cargo_update_post = function(req, res) {
 
 //Handle import quotes from CSV
 
-
+const makeDate = (input_date) => {
+    if(moment(input_date).isValid() || typeof input_date !== "undefined") {
+        return moment(input_date).toISOString( );
+    } else {
+        return moment().toISOString( );
+    } 
+} 
 
 exports.import_cargo_quotes = (req, res) => {
    let importedQuotes = req.body.imported_quotes;
@@ -143,8 +150,8 @@ exports.import_cargo_quotes = (req, res) => {
             broker:  importedQuotes[i][2],
             grade:     importedQuotes[i][3],
             quantity:  importedQuotes[i][4],
-            date1:  importedQuotes[i][5],
-            date2:  importedQuotes[i][6],
+            date1:   makeDate(importedQuotes[i][5]),
+            date2:   makeDate(importedQuotes[i][6]),
             load:  importedQuotes[i][7],
             discharge:  importedQuotes[i][8],
             rate_type:  importedQuotes[i][9],
@@ -154,6 +161,7 @@ exports.import_cargo_quotes = (req, res) => {
             added_by: importedBy
             });
         }
+
         importCargoQuote.insertMany(quotes ,function(err) {
             if(err && err.errors){
                 res.json({
