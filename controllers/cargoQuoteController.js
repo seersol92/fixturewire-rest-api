@@ -59,13 +59,14 @@ exports.cargo_create_post = function(req, res) {
      } else {
          
         let cargo = new CargoQuote({
+           type: req.body.type,
            cargo_status: req.body.cargo_status.toLowerCase(),
            charterer:  req.body.charterer.toLowerCase(),
            broker:  req.body.broker.toLowerCase(),
            grade:     req.body.grade.toLowerCase(),
            quantity:  req.body.quantity.toLowerCase(),
-           date1:  req.body.date1,
-           date2:  req.body.date2,
+           date1:  makeDate(req.body.date1),
+           date2:  makeDate(req.body.date2),
            load:  req.body.load.toLowerCase(),
            discharge:  req.body.discharge.toLowerCase(),
            rate_type:  req.body.rate_type.toLowerCase(),
@@ -96,13 +97,14 @@ exports.cargo_create_post = function(req, res) {
 exports.cargo_update_post = function(req, res) {
     var query = { '_id' : ObjectID(req.body.cargo_id)};
     let cargo = {
+           type: req.body.type,
            cargo_status: req.body.cargo_status,
            charterer:  req.body.charterer,
            broker:  req.body.broker,
            grade:     req.body.grade,
            quantity:  req.body.quantity,
-           date1:  new Date(req.body.date1),
-           date2:  new Date(req.body.date2),
+           date1:  makeDate(req.body.date1),
+           date2:  makeDate(req.body.date2),
            load:  req.body.load,
            discharge:  req.body.discharge,
            rate_type:  req.body.rate_type,
@@ -138,28 +140,40 @@ const makeDate = (input_date) => {
     } 
 } 
 
+const checkEmpty = (data) => {
+    if(typeof(data) == 'undefined' || data === null || typeof(data.length) === 'undefined')
+    {
+      return false; 
+    }
+    return true
+}
+
 exports.import_cargo_quotes = (req, res) => {
    let importedQuotes = req.body.imported_quotes;
    const importedBy = req.body.imported_by;
    let quotes = [];
    if (importedQuotes.length > 0 ) {
         for (let i = 0; i < importedQuotes.length; i++) {
-            quotes.push({
-            cargo_status: importedQuotes[i][0],
-            charterer:  importedQuotes[i][1],
-            broker:  importedQuotes[i][2],
-            grade:     importedQuotes[i][3],
-            quantity:  importedQuotes[i][4],
-            date1:   makeDate(importedQuotes[i][5]),
-            date2:   makeDate(importedQuotes[i][6]),
-            load:  importedQuotes[i][7],
-            discharge:  importedQuotes[i][8],
-            rate_type:  importedQuotes[i][9],
-            rate:  importedQuotes[i][10],
-            vessel:  importedQuotes[i][11],
-            remarks:  importedQuotes[i][12],
-            added_by: importedBy
-            });
+            if ( checkEmpty (importedQuotes[i][1]) && checkEmpty (importedQuotes[i][2]) && checkEmpty(importedQuotes[i][3])  && checkEmpty(importedQuotes[i][4])) 
+            {
+                quotes.push({
+                cargo_status: importedQuotes[i][0],
+                type: importedQuotes[i][1],
+                charterer:  importedQuotes[i][2],
+                broker:  importedQuotes[i][3],
+                grade:     importedQuotes[i][4],
+                quantity:  importedQuotes[i][5],
+                date1:   makeDate(importedQuotes[i][6]),
+                date2:   makeDate(importedQuotes[i][7]),
+                load:  importedQuotes[i][8],
+                discharge:  importedQuotes[i][9],
+                rate_type:  importedQuotes[i][10],
+                rate:  importedQuotes[i][11],
+                vessel:  importedQuotes[i][12],
+                remarks:  importedQuotes[i][13],
+                added_by: importedBy
+                });
+            }
         }
 
         importCargoQuote.insertMany(quotes ,function(err) {
