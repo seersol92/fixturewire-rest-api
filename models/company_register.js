@@ -13,8 +13,10 @@ const schema = new Schema({
     zip: {type: String, required: true},
     country: {type: String, required: true},
     phone: {type: String, required: true},
+    website: {type: String, required: true},
     user: {type: Schema.Types.ObjectId, ref: 'User'},
-	dateadded: { type: Date, default: Date.now }
+    dateadded: { type: Date, default: Date.now },
+    added_by: {type: String, required: true}
 
 });
 module.exports = mongoose.model('Comapny', schema);

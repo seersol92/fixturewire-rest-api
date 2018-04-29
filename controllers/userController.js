@@ -7,7 +7,7 @@ exports.index = function(req, res) {
 
 // Display list of user list.
 exports.user_list = function(req, res) {
-    user.find({}).select('firstname lastname username email is_admin').exec((err, user_list ) => {
+    user.find({}).select('firstname lastname username email company_email company mobile office_line ice whatsapp is_admin').exec((err, user_list ) => {
     if (err) {
             res.json({
                 success: false,
@@ -37,6 +37,12 @@ exports.create_user = function(req, res) {
             lastname: req.body.user.lastname.toLowerCase(),
             username: req.body.user.username.toLowerCase(),
             email: req.body.user.email.toLowerCase(),
+            company_email: req.body.user.company_email,
+            company: req.body.user.company,
+            mobile: req.body.user.mobile,
+            office_line: req.body.user.office_line,
+            ice: req.body.user.ice,
+            whatsapp: req.body.user.whatsapp,
             password: req.body.user.password,
             is_admin: req.body.user.is_admin
         });
@@ -92,7 +98,12 @@ exports.user_update = function(req, res) {
         lastname: req.body.user.lastname.toLowerCase(),
         username: req.body.user.username.toLowerCase(),
         email: req.body.user.email.toLowerCase(),
-      //  password: req.body.user.password,
+        company_email: req.body.user.company_email,
+        company: req.body.user.company,
+        mobile: req.body.user.mobile,
+        office_line: req.body.user.office_line,
+        ice: req.body.user.ice,
+        whatsapp: req.body.user.whatsapp,
         is_admin: req.body.user.is_admin
         };
           

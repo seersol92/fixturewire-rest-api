@@ -11,6 +11,9 @@
      req.checkBody('username', 'User Name is required').notEmpty();
      req.checkBody('email', 'Email is required').notEmpty();
      req.checkBody('email', 'Email does not appear to be valid').isEmail();
+     req.checkBody('company_email', 'Company Email is required').notEmpty();
+     req.checkBody('company', 'Company is required').notEmpty();     
+     req.checkBody('company_email', 'Company Email does not appear to be valid').isEmail();
      req.checkBody('password', 'Password is required').notEmpty();
      // req.assert('password_confirm', 'Passwords must match').equals(req.body.password);
      // check the validation object for errors
@@ -25,7 +28,13 @@
            firstname: req.body.firstname.toLowerCase(),
            lastname:  req.body.lastname.toLowerCase(),
            username:  req.body.username.toLowerCase(),
-           email:     req.body.email.toLowerCase(),
+           email:     req.body.email,
+           company_email: req.body.company_email,
+           company: req.body.company,
+           mobile: req.body.mobile,
+           office_line: req.body.office_line,
+           ice: req.body.ice,
+           whatsapp: req.body.whatsapp,
            password:  req.body.password,
            is_admin: req.body.is_admin
        });

@@ -49,7 +49,9 @@ exports.vessel_create_post = function(req, res) {
                own:     req.body.own,
                imo:     req.body.imo,
                flag:    req.body.flag,
-               type:    req.body.type
+               type:    req.body.type,
+               vessel_class: req.body.vessel_class,
+               added_by: req.body.added_by
               });
             createVessel.save( function(err) {
               if(err && err.errors){
@@ -74,7 +76,9 @@ exports.vessel_update_post = (req, res) => {
         own:     req.body.own,
         imo:     req.body.imo,
         flag:    req.body.flag,
-        type:    req.body.type
+        type:    req.body.type,
+        vessel_class: req.body.vessel_class,
+        added_by: req.body.added_by
     }},  function(err, numAffected) {
         if(err || numAffected.ok == 0) {
             res.json({

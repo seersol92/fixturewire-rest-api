@@ -8,7 +8,8 @@ const schema = new Schema({
     imo: {type: String, required: true},
     flag: {type: String, required: true},
     type: {type: String, required: true},
-    addedby: {type: Schema.Types.ObjectId, ref: 'User'},
+    vessel_class: {type: String, required: true},
+    added_by: {type: String, required: true},
 	dateadded: { type: Date, default: Date.now }
 
 });

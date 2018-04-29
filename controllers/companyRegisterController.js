@@ -57,7 +57,9 @@ exports.company_create_post = function(req, res) {
                state:   req.body.state,
                zip:     req.body.zip,
                country: req.body.country,
-               phone:   req.body.phone
+               phone:   req.body.phone,
+               website: req.body.website,
+               added_by:  req.body.added_by
               });
             company.save( 
                 function(err, numAffected) {
@@ -89,7 +91,9 @@ exports.update_company = (req, res) => {
         state:   req.body.state,
         zip:     req.body.zip,
         country: req.body.country,
-        phone:   req.body.phone
+        phone:   req.body.phone,
+        website: req.body.website,
+        added_by:  req.body.added_by
     }},  function(err, numAffected) {
         if(err || numAffected.ok == 0) {
             res.json({

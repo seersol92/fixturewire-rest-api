@@ -34,9 +34,15 @@ const userSchema = new Schema({
                uniqueCaseInsensitive: true,
                validate: emailValidators,
              },
-  password:  { type: String, required: true },
-  is_admin:  { type: Boolean, default: false },
-  dateadded: { type: Date, default: Date.now }
+  company_email: { type: String },
+  company:     { type: String },
+  mobile:      { type: String },
+  office_line: { type: String },
+  ice:         { type: String },
+  whatsapp:    { type: String },
+  password:    { type: String, required: true },
+  is_admin:    { type: Boolean, default: false },
+  dateadded:   { type: Date, default: Date.now }
 });
 userSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
 userSchema.pre('save', function(next) {
