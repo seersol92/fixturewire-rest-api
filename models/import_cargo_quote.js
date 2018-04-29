@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     cargo_status: {type: String},
     type: {type: String},
+    market: {type: String},
     charterer: {type: String},
     broker: {type: String},
     grade: {type: String},

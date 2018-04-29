@@ -35,8 +35,6 @@ exports.cargo_detail = function(req, res) {
     INFO  : Handle create new cargo on POST.
 */
 exports.cargo_create_post = function(req, res) {
-    console.log(req.body.date1);
-    console.log(req.body.date2);
     req.checkBody('cargo_status', 'Cargo Status is required').notEmpty();
     req.checkBody('charterer',  'Charterer is required').notEmpty();
     req.checkBody('broker',  'Broker is required').notEmpty();
@@ -60,20 +58,21 @@ exports.cargo_create_post = function(req, res) {
          
         let cargo = new CargoQuote({
            type: req.body.type,
-           cargo_status: req.body.cargo_status.toLowerCase(),
-           charterer:  req.body.charterer.toLowerCase(),
-           broker:  req.body.broker.toLowerCase(),
-           grade:     req.body.grade.toLowerCase(),
-           quantity:  req.body.quantity.toLowerCase(),
+           cargo_status: req.body.cargo_status,
+           market: req.body.market,           
+           charterer:  req.body.charterer,
+           broker:  req.body.broker,
+           grade:     req.body.grade,
+           quantity:  req.body.quantity,
            date1:  makeDate(req.body.date1),
            date2:  makeDate(req.body.date2),
-           load:  req.body.load.toLowerCase(),
-           discharge:  req.body.discharge.toLowerCase(),
-           rate_type:  req.body.rate_type.toLowerCase(),
-           rate:  req.body.rate.toLowerCase(),
-           vessel:  req.body.vessel.toLowerCase(),
-           remarks:  req.body.remarks.toLowerCase(),
-           added_by: req.body.addedby.toLowerCase()
+           load:  req.body.load,
+           discharge:  req.body.discharge,
+           rate_type:  req.body.rate_type,
+           rate:  req.body.rate,
+           vessel:  req.body.vessel,
+           remarks:  req.body.remarks,
+           added_by: req.body.addedby
           });
            cargo.save( function(err) {
               if(err && err.errors){
@@ -99,6 +98,7 @@ exports.cargo_update_post = function(req, res) {
     let cargo = {
            type: req.body.type,
            cargo_status: req.body.cargo_status,
+           market: req.body.market,
            charterer:  req.body.charterer,
            broker:  req.body.broker,
            grade:     req.body.grade,

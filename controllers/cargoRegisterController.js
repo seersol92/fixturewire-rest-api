@@ -39,9 +39,14 @@ exports.cargo_create_post = function(req, res) {
      } else {
          
         let cargo = new CargoRegister({
-           grade: req.body.grade.toLowerCase(),
-           description:  req.body.description.toLowerCase(),
-           type:  req.body.type.toLowerCase()
+            api: req.body.api,
+            sulfur: req.body.sulfur,
+            origin: req.body.origin,
+            origin_terminal: req.body.origin_terminal,
+            grade: req.body.grade,
+            description:  req.body.description,
+            type:  req.body.type,
+            added_by: req.body.added_by
           });
            cargo.save( function(err, numAffected) {
               if(err && err.errors || numAffected.ok === 0 ){
@@ -85,6 +90,10 @@ exports.book_update_get = function(req, res) {
 // Handle  update on POST.
 exports.update_cargo = function(req, res) {
     CargoRegister.findByIdAndUpdate(req.body.cargo_id, { $set: { 
+        api: req.body.api,
+        sulfur: req.body.sulfur,
+        origin: req.body.origin,
+        origin_terminal: req.body.origin_terminal,
         grade: req.body.grade,
         description:  req.body.description,
         type:  req.body.type
