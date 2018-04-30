@@ -148,29 +148,59 @@ const checkEmpty = (data) => {
     return true
 }
 
+exports.get_cargo_quote = (req, res) => {
+    const id = req.params.id.toString();
+    CargoQuote.findOne ({ _id : id } , function(err, cargo) {
+        if(err){
+            res.json({
+               success: false,
+               message:'No, Cargo Quote Found!!'
+            });
+        } else {
+            res.json({
+                success: true,
+                data:cargo
+            });
+        }
+    });
+}
+
+const remarks = (data) => {
+    let remarks = data[14];
+    if(data.length > 14) {
+        for (let i = 15; i < data.length; i++) {
+            remarks += '.' + data[i];
+        }
+        return remarks;
+    } else {
+        return data[index];
+    } 
+} 
+
 exports.import_cargo_quotes = (req, res) => {
    let importedQuotes = req.body.imported_quotes;
    const importedBy = req.body.imported_by;
    let quotes = [];
    if (importedQuotes.length > 0 ) {
         for (let i = 0; i < importedQuotes.length; i++) {
-            if ( checkEmpty (importedQuotes[i][1]) && checkEmpty (importedQuotes[i][2]) && checkEmpty(importedQuotes[i][3])  && checkEmpty(importedQuotes[i][4])) 
+            if ( checkEmpty (importedQuotes[i][1])  && checkEmpty(importedQuotes[i][3])  && checkEmpty(importedQuotes[i][4])) 
             {
                 quotes.push({
                 cargo_status: importedQuotes[i][0],
                 type: importedQuotes[i][1],
-                charterer:  importedQuotes[i][2],
-                broker:  importedQuotes[i][3],
-                grade:     importedQuotes[i][4],
-                quantity:  importedQuotes[i][5],
-                date1:   makeDate(importedQuotes[i][6]),
-                date2:   makeDate(importedQuotes[i][7]),
-                load:  importedQuotes[i][8],
-                discharge:  importedQuotes[i][9],
-                rate_type:  importedQuotes[i][10],
-                rate:  importedQuotes[i][11],
-                vessel:  importedQuotes[i][12],
-                remarks:  importedQuotes[i][13],
+                market: importedQuotes[i][2],
+                charterer:  importedQuotes[i][3],
+                broker:  importedQuotes[i][4],
+                grade:     importedQuotes[i][5],
+                quantity:  importedQuotes[i][6],
+                date1:   makeDate(importedQuotes[i][7]),
+                date2:   makeDate(importedQuotes[i][8]),
+                load:  importedQuotes[i][9],
+                discharge:  importedQuotes[i][10],
+                rate_type:  importedQuotes[i][11],
+                rate:  importedQuotes[i][12],
+                vessel:  importedQuotes[i][13],
+                remarks:  remarks(importedQuotes[i], 14),
                 added_by: importedBy
                 });
             }

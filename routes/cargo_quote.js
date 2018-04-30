@@ -10,6 +10,7 @@ router.get('/', cargo_controller.cargo_list);
 
 // POST request for cargo Post
 router.post('/create', cargo_controller.cargo_create_post);
+router.get('/get-quote/:id', cargo_controller.get_cargo_quote);
 
 router.post('/import-quotes', cargo_controller.import_cargo_quotes);
 router.post('/update', cargo_controller.cargo_update_post);
