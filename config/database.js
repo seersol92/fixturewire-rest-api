@@ -1,4 +1,4 @@
 module.exports = {
   secret: "supersecretalltheway",
-  database: "mongodb://mean_dev:hadi9292@ds253918.mlab.com:53918/mean_dev_db"
+  database:  'mongodb://quote-app-db:Devel0per@ds111430.mlab.com:11430/quote-app-db'
 }
