@@ -10,7 +10,7 @@ const config = {
   env: NODE_ENV,
   root: ROOT,
   server: {
-    port: 3000
+    port: 443
   },
   mongo: {
     host: MONGO_HOST,
