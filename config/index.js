@@ -1,7 +1,7 @@
 // get configs from environment
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const PORT = process.env.PORT || 3000;
-const MONGO_HOST = process.env.MONGO_HOST || 'mongodb://quote-app-db:Devel0per@ds111430.mlab.com:11430/quote-app-db';
+const MONGO_HOST = process.env.MONGO_HOST || 'mongodb://quote-app:Devel0per@ds111430.mlab.com:11430/quote-app-db';
 const SECRET = process.env.SECRET || 'supersecretalltheway';
 const ROOT = process.env.ROOT || '';
 
